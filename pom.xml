@@ -1,71 +1,181 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>br.com.feliva.defs</groupId>
-    <artifactId>components</artifactId>
-    <packaging>jar</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <name>defs</name>
+    <groupId>br.com.feliva</groupId>
+    <artifactId>defs</artifactId>
+    <version>1.0.0-SNAPSHOT</version>
+    <packaging>pom</packaging>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.report.sourceEncoding>UTF-8</project.report.sourceEncoding>
-        <maven.compiler.release>17</maven.compiler.release>
+        <maven.compiler.source>21</maven.compiler.source>
+        <maven.compiler.target>21</maven.compiler.target>
+
         <jakartaee-api.version>10.0.0</jakartaee-api.version>
-        <wildfly.version>30.0.0.Final</wildfly.version>
-        <compiler-plugin.version>3.11.0</compiler-plugin.version>
-        <war-plugin.version>3.3.2</war-plugin.version>
+
+        <version.server.bom>36.0.0.Final</version.server.bom>
+        <version.microprofile.bom>36.0.0.Final</version.microprofile.bom>
+        <version.wildfly.core>26.0.1.Final</version.wildfly.core>
+
+        <version.compiler.plugin>3.13.0</version.compiler.plugin>
+        <war-plugin.version>3.4.0</war-plugin.version>
         <wildfly-plugin.version>4.1.0.Final</wildfly-plugin.version>
+        <jasper.version>6.21.3</jasper.version>
+
+        <primefaces.version>15.0.5</primefaces.version>
+
+
+
+        <flyway.version>10.21.0</flyway.version>
+        <migrateTo></migrateTo>
+        <baselineVersion>0.0.1.000</baselineVersion>
+        <dbIP>localhost</dbIP>
+        <dbUser>postgres</dbUser>
+        <dbPassword>postgres</dbPassword>
+        <postgres.driver.version>42.7.1</postgres.driver.version>
+        <database.url>jdbc:postgresql://${dbIP}:5432/sifw</database.url>
+
     </properties>
 
-    <dependencies>
-        <dependency>
-            <groupId>jakarta.platform</groupId>
-            <artifactId>jakarta.jakartaee-api</artifactId>
-            <version>10.0.0</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.primefaces</groupId>
-            <artifactId>primefaces</artifactId>
-            <version>15.0.5</version>
-            <classifier>jakarta</classifier>
-            <scope>provided</scope>
-        </dependency>
-    </dependencies>
+
+    <modules>
+        <module>components</module>
+        <module>use</module>
+    </modules>
+<!-- mvn flyway:migrate -->
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>org.wildfly.bom</groupId>
+                <artifactId>wildfly-ee-with-tools</artifactId>
+                <version>${version.server.bom}</version>
+                <type>pom</type>
+                <scope>import</scope>
+            </dependency>
+
+            <dependency>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-core</artifactId>
+                <version>${flyway.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.primefaces.extensions</groupId>
+                <artifactId>barcode4j-light</artifactId>
+                <version>2.3.0</version>
+            </dependency>
+            <dependency>
+                <groupId>io.undertow</groupId>
+                <artifactId>undertow-core</artifactId>
+                <version>2.3.18.Final</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>io.undertow</groupId>
+                <artifactId>undertow-servlet</artifactId>
+                <version>2.3.18.Final</version>
+                <scope>provided</scope>
+            </dependency>
+            <dependency>
+                <groupId>org.wildfly.security</groupId>
+                <artifactId>wildfly-elytron-http-oidc</artifactId>
+                <version>2.6.0.Final</version>
+            </dependency>
+            <dependency>
+                <groupId>org.primefaces</groupId>
+                <artifactId>primefaces</artifactId>
+                <version>${primefaces.version}</version>
+                <classifier>jakarta</classifier>
+            </dependency>
+
+            <dependency>
+                <groupId>org.glassfish</groupId>
+                <artifactId>jakarta.faces</artifactId>
+                <version>4.0.7</version>
+            </dependency>
+
+            <dependency>
+                <groupId>io.nayuki</groupId>
+                <artifactId>qrcodegen</artifactId>
+                <version>1.8.0</version>
+            </dependency>
+            <dependency>
+                <groupId>commons-fileupload</groupId>
+                <artifactId>commons-fileupload</artifactId>
+                <version>1.5</version>
+            </dependency>
+            <dependency>
+                <groupId>org.omnifaces</groupId>
+                <artifactId>omnifaces</artifactId>
+                <version>4.5.1</version>
+            </dependency>
+
+            <!-- graficos primeaces-->
+            <dependency>
+                <groupId>software.xdev</groupId>
+                <artifactId>chartjs-java-model</artifactId>
+                <version>2.6.0</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.googlecode.owasp-java-html-sanitizer</groupId>
+                <artifactId>owasp-java-html-sanitizer</artifactId>
+                <version>20240325.1</version>
+            </dependency>
+
+            <dependency>
+                <groupId>org.projectlombok</groupId>
+                <artifactId>lombok</artifactId>
+                <version>1.18.34</version>
+            </dependency>
+
+            <dependency>
+                <groupId>br.edu.iffar.fw</groupId>
+                <artifactId>classBag</artifactId>
+                <version>0.0.1-SNAPSHOT</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <build>
-        <resources>
-            <resource>
-                <directory>src/main/java</directory>
-                <includes>
-                    <include>**/*.jasper</include>
-                    <include>**/*.png</include>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                </includes>
-            </resource>
-            <resource>
-                <directory>src/main/resources</directory>
-                <includes>
-                    <include>**/*.xml</include>
-                    <include>**/*.properties</include>
-                    <include>**/*.css</include>
-                    <include>**/*.js</include>
-                </includes>
-            </resource>
-        </resources>
-
         <plugins>
             <plugin>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>${compiler-plugin.version}</version>
+                <groupId>org.flywaydb</groupId>
+                <artifactId>flyway-maven-plugin</artifactId>
+                <version>${flyway.version}</version>
                 <configuration>
-                    <source>${compiler-plugin.version}</source>
-                    <target>${compiler-plugin.version}</target>
+                    <sqlMigrationSeparator>---</sqlMigrationSeparator>
+                    <locations>
+                        <location>filesystem:migrations</location>
+                    </locations>
+                    <url>${database.url}</url>
+                    <user>${dbUser}</user>
+                    <password>${dbPassword}</password>
+                    <detectEncoding>true</detectEncoding>
+                    <target>${migrateTo}</target>
+                    <schemas>flyway</schemas>
+                    <table>flyway_sifw</table>
+                    <baselineVersion>${baselineVersion}</baselineVersion>
+                    <baselineDescription>Base Migration</baselineDescription>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.flywaydb</groupId>
+                        <artifactId>flyway-database-postgresql</artifactId>
+                        <version>${flyway.version}</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                    <dependency>
+                        <groupId>org.postgresql</groupId>
+                        <artifactId>postgresql</artifactId>
+                        <version>${postgres.driver.version}</version>
+                    </dependency>
+                </dependencies>
             </plugin>
-
         </plugins>
     </build>
+
 </project>
