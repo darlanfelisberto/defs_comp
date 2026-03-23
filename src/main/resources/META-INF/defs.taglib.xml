@@ -6,7 +6,19 @@
 
     <description>defs JSF tag library.</description>
 
-    <namespace>defs.feliva.com.br</namespace>
+    <namespace>br.com.feliva.defs</namespace>
+
+    <tag>
+        <tag-name>output</tag-name>
+        <component>
+            <component-type>defs.output</component-type>
+        </component>
+        <attribute>
+            <name>value</name>
+            <required>true</required>
+            <type>java.lang.String</type>
+        </attribute>
+    </tag>
 
     <tag>
         <tag-name>DOutPut</tag-name>

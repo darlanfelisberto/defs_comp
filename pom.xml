@@ -1,8 +1,8 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
     <modelVersion>4.0.0</modelVersion>
-    <groupId>br.com.feliva</groupId>
-    <artifactId>defs</artifactId>
+    <groupId>br.com.feliva.defs</groupId>
+    <artifactId>components</artifactId>
     <packaging>jar</packaging>
     <version>1.0-SNAPSHOT</version>
     <name>defs</name>
@@ -28,7 +28,7 @@
         <dependency>
             <groupId>org.primefaces</groupId>
             <artifactId>primefaces</artifactId>
-            <version>13.0.4</version>
+            <version>15.0.5</version>
             <classifier>jakarta</classifier>
             <scope>provided</scope>
         </dependency>
